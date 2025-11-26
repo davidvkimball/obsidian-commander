@@ -13,7 +13,7 @@ export default class StatusBarManager extends CommandManagerBase {
 	private readonly actions = new Map<CommandIconPair, HTMLElement>();
 	private addBtn = createDiv({
 		cls: "cmdr status-bar-item cmdr-adder",
-		attr: { "aria-label-position": "top", "aria-label": t("Add new") },
+		attr: { "data-tooltip-position": "top", "aria-label": t("Add new") },
 	});
 
 	public constructor(plugin: CommanderPlugin, pairs: CommandIconPair[]) {
@@ -92,7 +92,7 @@ export default class StatusBarManager extends CommandManagerBase {
 	private addAction(pair: CommandIconPair): void {
 		const btn = createDiv({
 			cls: "cmdr status-bar-item clickable-icon",
-			attr: { "aria-label-position": "top", "aria-label": pair.name },
+			attr: { "data-tooltip-position": "top", "aria-label": pair.name },
 		});
 		this.actions.set(pair, btn);
 		btn.style.color =
