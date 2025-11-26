@@ -28,16 +28,13 @@ export default class StatusBarManager extends CommandManagerBase {
 		this.plugin.app.workspace.onLayoutReady(() => {
 			this.container = this.plugin.app.statusBar.containerEl;
 			for (const cmd of this.pairs) {
-				//Command has been removed
-				if (!getCommandFromId(cmd.id, this.plugin)) {
-					this.pairs.remove(cmd);
-				}
-
-				if (isModeActive(cmd.mode, this.plugin)) {
+				// Only add action if command exists and mode is active
+				// Don't remove commands from settings if they're temporarily unavailable
+				// (e.g., from other plugins that haven't loaded yet)
+				if (getCommandFromId(cmd.id, this.plugin) && isModeActive(cmd.mode, this.plugin)) {
 					this.addAction(cmd);
 				}
 			}
-			this.plugin.saveSettings();
 
 			this.plugin.registerDomEvent(
 				this.container,
